@@ -1,0 +1,130 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(to right, #d9e4f5, #f5f5f5);
+  color: #333;
+}
+
+/* Revert alignment changes for dropdown and button */
+.container {
+  max-width: 900px;
+  margin: 100px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 35vh; /* Increased height to make the container longer */
+  padding-bottom: 40px;
+}
+
+h1 {
+  text-align: center;
+  font-weight: 600;
+  color: #007bff;
+  margin-bottom: 10px;
+  margin-top: 10px; /* Reduced margin to move heading upwards */
+}
+
+/* Align the owner name, father name, and search button in one line */
+.form-group {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-group input {
+  flex: 2; /* Increased flex to make input boxes longer */
+  padding: 12px 25px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.form-group button {
+  padding: 12px 20px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.form-group button:hover {
+  background: #0056b3;
+}
+
+#translate-btn:hover {
+  background: #0056b3;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  min-width: 600px;
+}
+
+th, td {
+  padding: 14px 18px;
+  border: 1px solid #eaeaea;
+  text-align: left;
+  font-size: 15px;
+}
+
+th {
+  background: #f0f8ff;
+  color: #333;
+  font-weight: 600;
+}
+
+td a {
+  color: #007bff;
+  text-decoration: underline; /* Blue underline */
+  font-weight: 500;
+}
+
+td a:hover {
+  color: #0056b3; /* Darker blue when hovering */
+  text-decoration: none; /* Removes underline on hover */
+}
+
+/* Shorten the dropdown box and next button, and align them in the center */
+select {
+  width: 300px;
+  margin: 20px 0;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 150px;
+  padding: 8px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
