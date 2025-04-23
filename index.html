@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Varanasi Land Records Search</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <button id="translate-btn" style="position: fixed; bottom: 20px; left: 20px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer;">🌐 Translate</button>
+  <script type="text/babel">
+    const { useState } = React;
+
+    const BASE_URL = "https://records-backend-2yar.onrender.com";
+
+    const translations = {
+      en: {
+        title: "Varanasi Land Records",
+        ownerPlaceholder: "👤 Owner Name",
+        fatherPlaceholder: "👨‍👦 Father/Husband Name",
+        searchButton: "🔍 Search",
+        tableHeaders: ["KHATA NUMBER", "KHASRA NUMBER", "AREA", "DOCUMENT"],
+      },
+      hi: {
+        title: "वाराणसी भूमि अभिलेख",
+        ownerPlaceholder: "👤 मालिक का नाम",
+        fatherPlaceholder: "👨‍👦 पिता/पति का नाम",
+        searchButton: "🔍 खोजें",
+        tableHeaders: ["खाता संख्या", "खसरा संख्या", "क्षेत्रफल", "दस्तावेज़"],
+      },
+    };
+
+    const cityVillageOptions = [
+      "Adampur", "Adhkatiya Kala Khas", "Aharak", "Ahiran", "Ahirani", "Ajaipur", "Akorha",
+      "Amaut", "Amawar", "Amilo", "Anura", "Araji Hasanpur", "Arazi Tari", "Ashapur",
+      "Ashwari", "Aswalpur", "Ateshua", "Aura", "Auraon", "Ausanpur", "Ayar", "Azgara Khas",
+      "Azoarepur", "Babatpur", "Bachaura", "Badhauna", "Baghaita", "Bahadurpur", "Baharipur",
+      "Bahoripur", "Bahuawn", "Chak Bankat", "Chak Barai", "Chak Bhatan", "Chak Chadara",
+      "Chak Chamran", "Chak Dagrha", "Chak Dulla", "Chak Ghurdaur", "Chak Kharawan",
+      "Chak Lakhansipur", "Chak Loaweg", "Chak Machhiya", "Chak Mohanpur", "Chakarma",
+      "Chakender", "Chakiya", "Chakka", "Chamawn", "Chamru", "Chandi Patti", "Chandrawati",
+      "Changwar", "Charo", "Chaturpur", "Chaubepur Kala", "Chaubepur Khurd", "Chauka",
+      "Chehara", "Cherapur", "Chhataon", "Chhitampur", "Chilbila", "Chintamanpur",
+      "Chitaura", "Chiura Patti", "Chiurapur", "Cholapur", "Chumkuni", "Daharak", "Dallipur",
+      "Dandupur", "Darapur", "Darberupur", "Darunpur", "Dasepur", "Dashrathpur", "Dasnipur",
+      "Daudpur", "Dayalipur", "Dayalpur Kala", "Dayalpur Khurd", "Debathua", "Deipur",
+      "Demrupur", "Deorai", "Deoriya", "Devchandpur", "Devji", "Devnandpur", "Devonathpur",
+      "Dhakhawa", "Dhaneshri", "Dhanrajaipur", "Dharampur", "Dharmalpur", "Dharmanpur",
+      "Dharsauna", "Dhaurhara", "Dherahi", "Dhora", "Dhoraipur", "Ramnagar", "Lohta",
+      "Phulwaria", "Shivdaspur", "Suzabad", "Kotwa", "Maruadih", "Varanasi Cantonment",
+      "Benipur", "Chhitpur", "Kandwa", "Sir Gobardhan", "Susuwahi", "Salarpur", "Birbhanpur",
+      "Harpalpur", "Gangapur", "Kakarmatta", "Bhagawanpur", "Lerhupur", "Amara Khaira Chak",
+      "Umarha", "Chandpur", "Dindaspur", "Kallipur", "Chhitauni", "Asapur", "Jalal Patti",
+      "Kachnar", "Maheshpur", "Kesaripur", "Parmanandpur", "Lahartara", "Sarai Mohana",
+      "Gaura Kala"
+    ];
+
+    function App() {
+      const [selectedCity, setSelectedCity] = useState("");
+      const [showRecordsPage, setShowRecordsPage] = useState(false);
+      const [owner, setOwner] = useState('');
+      const [father, setFather] = useState('');
+      const [results, setResults] = useState([]);
+
+      const handleCitySelection = () => {
+        if (selectedCity) {
+          setShowRecordsPage(true);
+        } else {
+          alert("Please select a city/village name.");
+        }
+      };
+
+      const handleSearch = async () => {
+        const res = await fetch(
+          `${BASE_URL}search?owner=${encodeURIComponent(owner)}&father=${encodeURIComponent(father)}`
+        );
+        const data = await res.json();
+        setResults(data);
+      };
+
+      if (showRecordsPage) {
+        return (
+          <div className="container">
+            <h1 id="title">Varanasi Land Records</h1>
+            <div className="form-group">
+              <input
+                type="text"
+                id="owner-input"
+                placeholder="👤 Owner Name"
+                value={owner}
+                onChange={e => setOwner(e.target.value)}
+              />
+              <input
+                type="text"
+                id="father-input"
+                placeholder="👨‍👦 Father/Husband Name"
+                value={father}
+                onChange={e => setFather(e.target.value)}
+              />
+              <button id="search-button" onClick={handleSearch}>🔍 Search</button>
+            </div>
+
+            {results.length > 0 && (
+              <div className="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      {Object.keys(results[0]).map(col => (
+                        <th key={col}>{col.replace('_',' ').toUpperCase()}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {results.map((row, idx) => (
+                      <tr key={idx}>
+                        {Object.entries(row).map(([key, val], i) => (
+                          <td key={i}>
+                            {key === 'Document' ? (
+                              <a href={`${BASE_URL}documents/${val}`} target="_blank" rel="noopener noreferrer">📄 View PDF</a>
+                            ) : (
+                              val
+                            )}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      return (
+        <div className="container">
+          <h1>Select Your City/Village</h1>
+          <select
+            value={selectedCity}
+            onChange={(e) => setSelectedCity(e.target.value)}
+          >
+            <option value="">Select City/Village</option>
+            {cityVillageOptions.map((option, index) => (
+              <option key={index} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          <button onClick={handleCitySelection}>Next</button>
+        </div>
+      );
+    }
+
+    const handleTranslate = () => {
+      const currentLang = document.documentElement.lang;
+      const newLang = currentLang === "hi" ? "en" : "hi";
+      document.documentElement.lang = newLang;
+
+      const translation = translations[newLang];
+      document.getElementById("title").innerText = translation.title;
+      document.getElementById("owner-input").placeholder = translation.ownerPlaceholder;
+      document.getElementById("father-input").placeholder = translation.fatherPlaceholder;
+      document.getElementById("search-button").innerText = translation.searchButton;
+
+      const tableHeaders = document.querySelectorAll("th");
+      translation.tableHeaders.forEach((header, index) => {
+        if (tableHeaders[index]) {
+          tableHeaders[index].innerText = header;
+        }
+      });
+    };
+
+    document.getElementById("translate-btn").addEventListener("click", handleTranslate);
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
