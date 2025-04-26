@@ -77,7 +77,7 @@
 
       const handleSearch = async () => {
         const res = await fetch(
-          `${BASE_URL}search?owner=${encodeURIComponent(owner)}&father=${encodeURIComponent(father)}`
+          `${BASE_URL}/search?owner=${encodeURIComponent(owner)}&father=${encodeURIComponent(father)}`
         );
         const data = await res.json();
         setResults(data);
