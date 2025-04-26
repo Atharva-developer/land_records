@@ -13,6 +13,7 @@
 <body>
   <div id="root"></div>
   <button id="translate-btn" style="position: fixed; bottom: 20px; left: 20px; padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer;">🌐 Translate</button>
+  
   <script type="text/babel">
     const { useState } = React;
 
@@ -121,7 +122,13 @@
                         {Object.entries(row).map(([key, val], i) => (
                           <td key={i}>
                             {key === 'Document' ? (
-                              <a href={`${BASE_URL}documents/${val}`} target="_blank" rel="noopener noreferrer">📄 View PDF</a>
+                              (() => {
+                                const document_filename = val;
+                                const full_url = BASE_URL + "/static/documents/" + document_filename;
+                                return (
+                                  <a href={full_url} target="_blank" rel="noopener noreferrer">📄 View PDF</a>
+                                );
+                              })()
                             ) : (
                               val
                             )}
